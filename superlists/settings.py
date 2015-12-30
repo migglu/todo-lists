@@ -25,7 +25,9 @@ SECRET_KEY = 'nz&5s(mbc08hfslj=67-ema%^qef*)96xkr7tusw5584=45h%e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+DOMAIN = "localhost"
+
+ALLOWED_HOSTS = [DOMAIN]
 
 
 # Application definition
@@ -38,6 +40,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'lists',
+    'accounts',
+    'functional_tests'
+)
+
+AUTH_USER_MODEL = "accounts.User"
+AUTHENTICATION_BACKENDS = (
+    'accounts.authentication.PersonaAuthenticationBackend',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,6 +79,24 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'superlists.wsgi.application'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"]
+        }
+    },
+    "root": {"level": "INFO"}
+
+}
 
 
 # Database
