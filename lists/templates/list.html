@@ -11,3 +11,21 @@
 		{% endfor %}
 	</table>
 {% endblock %}
+
+{% block sharing %}
+	<h2>Shared with</h2>
+	<ul>
+		{% for user in list.shared_with.all %}
+			<li><a href="{{ user.get_absolute_url }}">{{ user.name }}</a></li>
+		{% endfor %}
+	</ul>
+	<form method="POST" action="{% url 'share_list' %}">
+		<input type="text" placeholder="" name="email" />
+		{% csrf_token %}
+		{% if form.errors %}
+			<div class="form-group has-error">
+				<span class="help-block">{{ form.text.errors }}</span>
+			</div>
+		{% endif %}
+	</form>
+{% endblock %}
