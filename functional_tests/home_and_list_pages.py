@@ -26,7 +26,7 @@ class HomePage(object):
         self.test.browser.find_element_by_link_text("My lists").click()
         self.test.wait_for(lambda: self.test.assertEqual(
             self.test.browser.find_element_by_tag_name("h1").text,
-            "My Lists"
+            "My Other Lists"
         ))
 
 
@@ -35,9 +35,12 @@ class ListPage(object):
     def __init__(self, test):
         self.test = test
 
+    def get_list_owner(self):
+        return self.test.browser.find_element_by_id('list_owner').text
+
     def get_list_table_rows(self):
         return self.test.browser.find_elements_by_css_selector(
-            "#id_list_table tr"
+            "#id_list_table tbody tr"
         )
 
     def wait_for_new_item_in_list(self, item_text, position):
@@ -59,13 +62,13 @@ class ListPage(object):
 
     def share_list_with(self, email):
         self.get_share_box().send_keys(email + "\n")
-        self.test.wait_for(lambda: self.assertIn(
+        self.test.wait_for(lambda: self.test.assertIn(
             email,
             [item.text for item in self.get_shared_with_list()]
         ))
 
     def get_item_input(self):
-        self.test.browser.find_element_by_id(ITEM_INPUT_ID)
+        return self.test.browser.find_element_by_id(ITEM_INPUT_ID)
 
     def add_new_item(self, item_text):
         current_pos = len(self.get_list_table_rows())

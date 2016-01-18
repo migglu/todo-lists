@@ -47,4 +47,4 @@ class SharingTest(FunctionalTest):
 
         self.browser = edith_browser
         self.browser.refresh()
-        list_page.wait_for_new_item_in_list("Hi Edith", 2)
+        list_page.wait_for_new_item_in_list("Hi Edith!", 2)
